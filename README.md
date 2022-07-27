@@ -1,7 +1,9 @@
-# fullStack_tehtavapalautus
+# Full Stack tehtäväpalautus
 
 Helsingin yliopiston tietojenkäsittelytieteen full stack -ohjelmointikurssin tehtävien palautusrepositorio
 
 #### Tehtäväpalautukset:
 
-[osa0](https://github.com/minnaRon/fullStack_tehtavapalautus/tree/master/osa0)
+[**osa 0** Web-sovellusten toiminnan perusteet](https://github.com/minnaRon/fullStack_tehtavapalautus/tree/master/osa0)
+
+[**osa 1** Reactin perusteet](https://github.com/minnaRon/fullStack_tehtavapalautus/tree/master/osa1)
