@@ -2,21 +2,21 @@ import { useState, useEffect } from 'react'
 import personService from './services/Persons'
 
 
-const Filter = ({newSubstring, handleSubstringChange}) => 
+const Filter = ({ newSubstring, handleSubstringChange }) =>
   <div>
-    filter shown with 
+    filter shown with
     <input value={newSubstring} onChange={handleSubstringChange} />
   </div>
 
 
-const PersonForm = ({addPerson, handleChange, newName, newNumber}) =>
+const PersonForm = ({ addPerson, handleChange, newName, newNumber }) =>
   <form onSubmit={addPerson}>
     <div>
-      name: 
+      name:
       <input name='name' value={newName} onChange={handleChange}/>
     </div>
     <div>
-      number: 
+      number:
       <input name='number' value={newNumber} onChange={handleChange}/>
     </div>
     <div>
@@ -53,7 +53,7 @@ const Notification = ({ message }) => {
 
 
 const Person = ({ person, removePerson }) =>
-  <p> 
+  <p>
     {person.name} {person.number}
     <button onClick={removePerson}>delete</button>
   </p>
@@ -61,27 +61,27 @@ const Person = ({ person, removePerson }) =>
 
 const App = () => {
   const [persons, setPersons] = useState([])
-  const [newName, setNewName] = useState('Martin Fowler')
-  const [newNumber, setNewNumber] = useState('+234 23-3344')
+  const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
   const [newSubstring, setNewSubstring] = useState('')
   const [message, setMessage] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     personService
-    .getAll()
-    .then(allPersons => {
-      setPersons(allPersons)
-    })
-  }, []) 
-  
+      .getAll()
+      .then(allPersons => {
+        setPersons(allPersons)
+      })
+  }, [])
+
   const handlePerson = (event) => {
     event.preventDefault()
-    
-    const existingPersonInfo = persons.filter(person => 
+
+    const existingPersonInfo = persons.filter(person =>
       person.name.trim().toLowerCase() === newName.trim().toLowerCase())
-    
-      if (existingPersonInfo[0] && existingPersonInfo[0].number === newNumber) {
+
+    if (existingPersonInfo[0] && existingPersonInfo[0].number === newNumber) {
       alert(`${newName} is already added to phonebook`)
     } else if (existingPersonInfo[0]) {
       changeNumber(existingPersonInfo[0])
@@ -96,42 +96,57 @@ const App = () => {
       .then(updatedPerson => {
         let newPersons = [...persons]
         newPersons.forEach(
-          person => person.id === updatedPerson.id 
-          ? person.number = updatedPerson.number 
-          : person.number = person.number
-          )
+          person => person.id === updatedPerson.id
+            ? person.number = updatedPerson.number
+            : person.number = person.number
+        )
         setPersons(newPersons)
-        
+        setNewName('')
+        setNewNumber('')
         setMessage(`${updatedPerson.name} has now new phonenumber: ${updatedPerson.number}`)
         setTimeout(() => {
           setMessage(null)
         }, 4000)
 
       }).catch(error => {
-        setErrorMessage(`error: Information of ${existingPersonInfo.name} has already been removed from server`)
-        setTimeout(() => {
-        setErrorMessage(null)
-        }, 4000)
-        setPersons(persons.filter(person => person.id !== existingPersonInfo.id))
+        if (error.response.data.error.includes('Validation failed')) {
+          setErrorMessage(`error: ${error.response.data.error}`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 4000)
+        } else {
+          setErrorMessage(`error: Information of ${existingPersonInfo.name} has already been removed from server`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 4000)
+          setPersons(persons.filter(person => person.id !== existingPersonInfo.id))
+        }
       })
   }
 
-  const addPerson = () => {  
-      const personObject = {
-        name: newName,
-        number: newNumber,
-      }
-      personService
-        .create(personObject)
-        .then(returnedPerson => {
-          setPersons(persons.concat(returnedPerson))
-          setNewName('Ada')
-          setNewNumber('speed dial 1')
-          setMessage(`Added ${returnedPerson.name}`)
-          setTimeout(() => {
+  const addPerson = () => {
+    const personObject = {
+      name: newName,
+      number: newNumber,
+    }
+    personService
+      .create(personObject)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
+        setNewName('')
+        setNewNumber('')
+        setMessage(`Added ${returnedPerson.name}`)
+        setTimeout(() => {
           setMessage(null)
-          }, 2000)
-        })
+        }, 2000)
+      })
+      .catch(error => {
+        const message = error.response.data.error
+        setErrorMessage(`error: ${message}`)
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      })
   }
 
   const remove = person => {
@@ -141,29 +156,29 @@ const App = () => {
       personService
         .remove(person.id)
         .then(returnedStatus => {
-          if (returnedStatus === 200) {
-            setPersons(persons.filter(x => x.id !== person.id))
-            setMessage(`Deleted ${person.name}`)
-            setTimeout(() => {
+          // if (returnedStatus === 200) {
+          setPersons(persons.filter(x => x.id !== person.id))
+          setMessage(`Deleted ${person.name}`)
+          setTimeout(() => {
             setMessage(null)
-            }, 4000)
-          }
+          }, 4000)
+          //}
         })
     }
   }
 
-  const selectedPersons = () => 
-    persons.filter(person => 
+  const selectedPersons = () =>
+    persons.filter(person =>
       person.name.toLowerCase().includes(newSubstring.toLowerCase())
-  )
+    )
 
   const handleSubstringChange = (event) => {
     setNewSubstring(event.target.value)
   }
 
   const handleChange = (event) => {
-    event.target.name === 'name' 
-      ? setNewName(event.target.value) 
+    event.target.name === 'name'
+      ? setNewName(event.target.value)
       : setNewNumber(event.target.value)
   }
 
