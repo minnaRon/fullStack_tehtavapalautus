@@ -10,5 +10,5 @@ Helsingin yliopiston tietojenkäsittelytieteen full stack -ohjelmointikurssin te
 
 [**osa 2** Palvelimen kanssa tapahtuva kommunikointi](https://github.com/minnaRon/fullStack_tehtavapalautus/tree/master/osa2)
 
-[**Osa 3** Palvelimen ohjelmointi NodeJS:n Express-kirjastolla](https://github.com/minnaRon/fullStack_tehtavapalautus_osa3) 
+[**osa 3** Palvelimen ohjelmointi NodeJS:n Express-kirjastolla](https://github.com/minnaRon/fullStack_tehtavapalautus_osa3) 
 ... [sovellukseen Herokussa](https://fs-phonebook-15082022.herokuapp.com)
