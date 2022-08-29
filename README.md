@@ -12,3 +12,5 @@ Helsingin yliopiston tietojenkäsittelytieteen full stack -ohjelmointikurssin te
 
 [**osa 3** Palvelimen ohjelmointi NodeJS:n Express-kirjastolla](https://github.com/minnaRon/fullStack_tehtavapalautus_osa3) 
 ... [sovellukseen Herokussa](https://fs-phonebook-15082022.herokuapp.com)
+
+[**osa 4** Express-sovellusten testaaminen, käyttäjänhallinta](https://github.com/minnaRon/fullstack_blogisovellus_backend)
