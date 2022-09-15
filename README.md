@@ -14,3 +14,5 @@ Helsingin yliopiston tietojenkäsittelytieteen full stack -ohjelmointikurssin te
 ... [sovellukseen Herokussa](https://fs-phonebook-15082022.herokuapp.com)
 
 [**osa 4** Express-sovellusten testaaminen, käyttäjänhallinta](https://github.com/minnaRon/fullstack_blogisovellus_backend)
+
+[**osa 5** React-sovelluksen testaaminen](https://github.com/minnaRon/fullStack_tehtavapalautus/tree/master/osa5/bloglist-frontend)
