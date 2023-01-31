@@ -16,9 +16,7 @@ const App = () => {
   const blogFormRef = useRef()
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
+    blogService.getAll().then((blogs) => setBlogs(blogs))
   }, [])
 
   useEffect(() => {
@@ -30,8 +28,8 @@ const App = () => {
     }
   }, [])
 
-  const notify = (message, type='info') => {
-    setNotification({message, type})
+  const notify = (message, type = 'info') => {
+    setNotification({ message, type })
     setTimeout(() => {
       setNotification(null)
     }, 3000)
@@ -42,18 +40,17 @@ const App = () => {
 
     try {
       const user = await loginService.login({
-        username, password
+        username,
+        password,
       })
 
-      window.localStorage.setItem(
-        'loggedBlogappUser', JSON.stringify(user)
-      )
-      
+      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
+
       blogService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
-    } catch(exception) {
+    } catch (exception) {
       notify('wrong username or password', 'error')
     }
   }
@@ -73,16 +70,16 @@ const App = () => {
 
   const handleAddLike = async (blog) => {
     const updatedObject = {
-    user: blog.user.id,
-    likes: blog.likes + 1,
-    author: blog.author,
-    title: blog.title,
-    url: blog.url,
-    id: blog.id
-  }
-  const updatedBlog = await blogService.update(blog.id, updatedObject)
-  updatedBlog.user = blog.user
-  setBlogs(blogs.map(b => b.id !== blog.id ? b : updatedBlog)) 
+      user: blog.user.id,
+      likes: blog.likes + 1,
+      author: blog.author,
+      title: blog.title,
+      url: blog.url,
+      id: blog.id,
+    }
+    const updatedBlog = await blogService.update(blog.id, updatedObject)
+    updatedBlog.user = blog.user
+    setBlogs(blogs.map((b) => (b.id !== blog.id ? b : updatedBlog)))
   }
 
   if (user === null) {
@@ -91,38 +88,44 @@ const App = () => {
         <h2>Log in to application</h2>
 
         <Notification notification={notification} />
-        <LoginForm 
-          handleLogin={handleLogin} 
-          setUsername={setUsername} 
+        <LoginForm
+          handleLogin={handleLogin}
+          setUsername={setUsername}
           setPassword={setPassword}
-          />
+        />
       </div>
     )
   }
-    
+
   return (
     <div>
       <h2>blogs</h2>
-      
+
       <Notification notification={notification} />
       <div>
-      <p>
-        {user.name} logged in
-        <button onClick={() => handleLogout()}>logout</button>
-      </p>
-      <Togglable buttonLabel='new blog' ref={blogFormRef} >  
-        <AddNewBlogForm addBlog={addBlog} user={user} />
-      </Togglable>     
+        <p>
+          {user.name} logged in
+          <button onClick={() => handleLogout()}>logout</button>
+        </p>
+        <Togglable buttonLabel="new blog" ref={blogFormRef}>
+          <AddNewBlogForm addBlog={addBlog} user={user} />
+        </Togglable>
       </div>
       <div>
         {blogs
-          .sort((a,b) => a.likes - b.likes)
+          .sort((a, b) => a.likes - b.likes)
           .reverse()
-          .map(blog =>
-            <Blog key={blog.id} blog={blog} user={user} setBlogs={setBlogs} blogs={blogs} addLike={() => handleAddLike(blog)}/>
-          )
-        }
-      </div> 
+          .map((blog) => (
+            <Blog
+              key={blog.id}
+              blog={blog}
+              user={user}
+              setBlogs={setBlogs}
+              blogs={blogs}
+              addLike={() => handleAddLike(blog)}
+            />
+          ))}
+      </div>
     </div>
   )
 }
