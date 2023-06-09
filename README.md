@@ -20,3 +20,5 @@ Helsingin yliopiston tietojenkäsittelytieteen full stack -ohjelmointikurssin te
 [**osa 6** Sovelluksen tilan hallinta Redux-kirjastolla](https://github.com/minnaRon/fullStack_tehtavapalautus/tree/master/osa6)
 
 [**osa 7** React router, custom-hookit, tyylikirjastot ja webpack](https://github.com/minnaRon/fullStack_tehtavapalautus/tree/master/osa7)
+
+[**osa 8** GraphQL](https://github.com/minnaRon/fullStack_tehtavapalautus/tree/master/osa8)
