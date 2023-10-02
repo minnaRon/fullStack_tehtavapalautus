@@ -25,3 +25,13 @@ Helsingin yliopiston tietojenkäsittelytieteen full stack -ohjelmointikurssin te
 
 [**osa 9** Typescript](https://github.com/minnaRon/fullStack_tehtavapalautus/tree/master/osa9)
 
+[**osa 10** React Native](https://github.com/minnaRon/rate-repository-app)
+
+
+[**Projekti Workhelper**](https://workhelper.fly.dev/)
+[README](https://github.com/minnaRon/workhelper/blob/master/README.md)
+[front](https://github.com/minnaRon/workhelper-front)
+[back](https://github.com/minnaRon/workhelper)
+
+
+
